@@ -1,9 +1,11 @@
-﻿using DesignPatterns.Models;
+﻿using DesignPatterns.Creators;
+using DesignPatterns.Models;
 using DesignPatterns.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,21 +34,49 @@ namespace DesignPatterns.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public IActionResult AddMustang()
-        {
-            _vehicleRepository.AddVehicle(new Car("red","Ford","Mustang"));
-            return Redirect("/");
-        }
+		//      [HttpGet]
+		//      public IActionResult AddMustang() //aplicando cambios para usar el patrón builder
+		//      {
+		//          var builder = new CarModelBuilder();
+		//          _vehicleRepository.AddVehicle(builder.Build());
+		//          return Redirect("/");
+		//      }
 
-        [HttpGet]
-        public IActionResult AddExplorer()
-        {
-            _vehicleRepository.AddVehicle(new Car("red", "Ford", "Explorer"));
-            return Redirect("/");
-        }
+		//      [HttpGet]
+		//      public IActionResult AddExplorer() //aplicando cambios para usar el patrón builder
+		//{
+		//          var builder = new CarModelBuilder()
+		//              .SetModel("Explorer")
+		//              .SetColor("blue");
+		//	_vehicleRepository.AddVehicle(builder.Build());
+		//	return Redirect("/");
+		//      }
 
-        [HttpGet]
+		[HttpGet]
+		public IActionResult AddMustang() //aplicando cambios para usar el patrón Factory
+		{
+			Creator creator = new FordMustangCreator();
+			_vehicleRepository.AddVehicle(creator.Create());
+			return Redirect("/");
+		}
+
+		[HttpGet]
+		public IActionResult AddExplorer() //aplicando cambios para usar el patrón Factory
+		{
+            Creator creator = new FordExplorerCreator();
+			_vehicleRepository.AddVehicle(creator.Create());
+			return Redirect("/");
+		}
+
+		[HttpGet]
+		public IActionResult AddEscape() //aplicando cambios para usar el patrón Factory
+		{
+			Creator creator = new FordEscapeCreator();
+			_vehicleRepository.AddVehicle(creator.Create());
+			return Redirect("/");
+		}
+
+		[HttpGet]
         public IActionResult StartEngine(string id)
         {
             try

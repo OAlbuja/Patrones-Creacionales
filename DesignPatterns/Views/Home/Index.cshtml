@@ -17,8 +17,9 @@
         <th>Marca</th>
         <th>Modelo</th>
         <th>Color</th>
+        <th>Year</th>
         <th>Gallons</th>
-        <th>Status</th>
+        <th>Status</th>        
         <th>Actions</th>
         </thead>
         @foreach (var vehicle in Model.Vehicles)
@@ -38,6 +39,9 @@
         </td>
         <td>
             @vehicle.Color
+        </td>
+        <td>
+            @vehicle.Year @* Agregando el año *@
         </td>
         <td>
             @vehicle.Gas.ToString("N1")
@@ -63,4 +67,5 @@
 
     <a href="/Home/AddMustang">Add Mustang</a>
     <a href="/Home/AddExplorer">Add Explorer</a>
+    <a href="/Home/AddEscape">Add Escape</a> @* Agregando el nuevo modelo de auto *@
 </div>
